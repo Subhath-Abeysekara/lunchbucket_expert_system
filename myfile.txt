@@ -1,0 +1,9 @@
+7:
+white rice:
+Dhal Curry:
+Fish curry:
+Omlet:
+Chicken curry:
+price:1812.9
+customer_code:1745
+order_code:51427

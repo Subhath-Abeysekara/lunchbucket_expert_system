@@ -3,6 +3,7 @@ from flask_cors import CORS, cross_origin
 import getByTwo
 import getByThree
 import finalSuitability
+import getReport
 app = Flask(__name__)
 CORS(app, resources={r"/": {"origins": "*"}})
 
@@ -98,6 +99,28 @@ def suitability_for_three_lunch_prod(id1, id2, id3):
 def suitability_for_three_dinner_prod(id1, id2, id3):
     try:
         return getByThree.threeSuitability_prod_dinner(id1=id1, id2=id2, id3=id3)
+    except:
+        return {
+            "state": False,
+            "message": "error"
+        }
+
+@app.route("/dev/getReport/<meal>")
+@cross_origin()
+def get_report_dev(meal):
+    try:
+        return getReport.get_report_dev(meal=meal)
+    except:
+        return {
+            "state": False,
+            "message": "error"
+        }
+
+@app.route("/prod/getReport/<meal>")
+@cross_origin()
+def get_report_prod(meal):
+    try:
+        return getReport.get_report_prod(meal=meal)
     except:
         return {
             "state": False,
