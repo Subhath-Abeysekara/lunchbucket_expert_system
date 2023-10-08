@@ -54,7 +54,10 @@ def get_report_dev(meal):
         report_new['order_code'] = generate_code(str(doc['_id']))
         report_new['delivery_time'] = doc['delivery_time']
         report_new['threat'] = doc['threat']
-        pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else "")
+        report_new['printed'] = doc['printed']
+        state = "printed" if doc['printed'] else ""
+        pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else state)
+        collection_name_order_prod.update_one({'_id': doc['_id']}, {'$set': {"printed": True, }})
     print_pdf(pdf)
     return send_mail()
 
@@ -85,7 +88,10 @@ def get_report_prod(meal):
         report_new['order_code'] = generate_code(str(doc['_id']))
         report_new['delivery_time'] = doc['delivery_time']
         report_new['threat'] = doc['threat']
-        pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else "")
+        report_new['printed'] = doc['printed']
+        state = "printed" if doc['printed'] else ""
+        pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else state)
+        collection_name_order_prod.update_one({'_id':doc['_id']},{'$set':{"printed": True,}})
     print_pdf(pdf)
     return send_mail()
 get_report_prod('Lunch')

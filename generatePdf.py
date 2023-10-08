@@ -12,6 +12,8 @@ def generate_pdf(document , pdf,state):
         pdf.set_text_color(0, 255, 0)
     elif state == "threat":
         pdf.set_text_color(255, 0, 0)
+    elif state == "printed":
+        pdf.set_text_color(139, 69, 19)
     else:
         pdf.set_text_color(0, 0, 0)
     with open("myfile.txt", 'w') as f:
