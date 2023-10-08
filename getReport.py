@@ -55,7 +55,11 @@ def get_report_dev(meal):
         report_new['delivery_time'] = doc['delivery_time']
         report_new['threat'] = doc['threat']
         report_new['printed'] = doc['printed']
-        state = "printed" if doc['printed'] else ""
+        if doc['printed']:
+            state = "printed"
+        else:
+            state = ""
+            collection_name_order_prod.update_one({'_id': doc['_id']}, {'$set': {"printed": True}})
         pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else state)
         collection_name_order_prod.update_one({'_id': doc['_id']}, {'$set': {"printed": True, }})
     print_pdf(pdf)
