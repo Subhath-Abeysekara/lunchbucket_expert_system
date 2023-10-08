@@ -5,8 +5,9 @@ Wattakka kalupola:
 Dhal Curry Kirata:
 Mushroom, Vege salad with Papadam:
 price:260
+packet_amount:1
 customer_code:4642
+order_code:63113
 delivery_time:11:30 AM
 threat:False
-packet_amount:1
-order_code:63113
+printed:True
