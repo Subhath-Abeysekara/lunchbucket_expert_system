@@ -94,4 +94,4 @@ def get_report_prod(meal):
         collection_name_order_prod.update_one({'_id':doc['_id']},{'$set':{"printed": True,}})
     print_pdf(pdf)
     return send_mail()
-get_report_prod('Lunch')
+# get_report_prod('Lunch')
