@@ -1,9 +1,12 @@
-7:
+12:
 white rice:
-Dhal Curry:
-Fish curry:
-Omlet:
-Chicken curry:
-price:1812.9
-customer_code:1745
-order_code:51427
+Carrot curry:
+Wattakka kalupola:
+Dhal Curry Kirata:
+Mushroom, Vege salad with Papadam:
+price:260
+customer_code:4642
+delivery_time:11:30 AM
+threat:False
+packet_amount:1
+order_code:63113

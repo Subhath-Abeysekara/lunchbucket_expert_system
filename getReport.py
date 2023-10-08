@@ -34,12 +34,12 @@ def get_report_dev(meal):
     report = get_report(collection_name_report_dev ,doc_id_dev, meal)
     docs = get_orders(collection_name_order_dev , meal)
     pdf = init_pdf()
-    pdf = generate_pdf(report , pdf)
+    pdf = generate_pdf(report , pdf,"")
     pdf.add_page()
     report_orders= {
         'ORDERS':''
     }
-    pdf = generate_pdf(report_orders, pdf)
+    pdf = generate_pdf(report_orders, pdf,"")
     i = 0
     for doc in docs:
         i+=1
@@ -49,33 +49,43 @@ def get_report_dev(meal):
         for item in doc['items']:
             report_new[item]=''
         report_new['price'] = doc['price']
+        report_new['packet_amount'] = doc['packet_amount']
         report_new['customer_code'] = doc['customer_code']
         report_new['order_code'] = generate_code(str(doc['_id']))
-        pdf = generate_pdf(report_new,pdf)
+        report_new['delivery_time'] = doc['delivery_time']
+        report_new['threat'] = doc['threat']
+        pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else "")
     print_pdf(pdf)
     return send_mail()
 
 def get_report_prod(meal):
     report = get_report(collection_name_report_prod ,doc_id_prod, meal)
-    docs = get_orders(collection_name_order_dev , meal)
+    print(report)
+    docs = get_orders(collection_name_order_prod , meal)
+    print(docs)
     pdf = init_pdf()
-    pdf = generate_pdf(report , pdf)
+    pdf = generate_pdf(report , pdf , "")
     pdf.add_page()
     report_orders= {
         'ORDERS':''
     }
-    pdf = generate_pdf(report_orders, pdf)
+    pdf = generate_pdf(report_orders, pdf,"")
     i = 0
     for doc in docs:
         i+=1
         report_new = {
             i:''
         }
+        print(doc)
         for item in doc['items']:
             report_new[item]=''
         report_new['price'] = doc['price']
+        report_new['packet_amount'] = doc['packet_amount']
         report_new['customer_code'] = doc['customer_code']
         report_new['order_code'] = generate_code(str(doc['_id']))
-        pdf = generate_pdf(report_new,pdf)
+        report_new['delivery_time'] = doc['delivery_time']
+        report_new['threat'] = doc['threat']
+        pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else "")
     print_pdf(pdf)
     return send_mail()
+get_report_prod('Lunch')

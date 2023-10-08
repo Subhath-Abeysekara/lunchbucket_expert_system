@@ -4,12 +4,12 @@ import getByTwo
 import getByThree
 import finalSuitability
 import getReport
+
 app = Flask(__name__)
 CORS(app, resources={r"/": {"origins": "*"}})
 
 image_url = "https://firebasestorage.googleapis.com/v0/b/meetingdetecting.appspot.com/o/lunchbucket_special_meal%2Fi2AuthLogo.jpeg?alt=media&token=2cc0abf1-8069-47ad-863b-862be3afe2ed"
 image_url_background = "https://firebasestorage.googleapis.com/v0/b/meetingdetecting.appspot.com/o/lunchbucket_special_meal%2Fbackground.jpeg?alt=media&token=94c39cf0-d097-4967-b261-1ac2b6f9e688"
-
 
 @app.route("/")
 def main():

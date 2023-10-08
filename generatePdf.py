@@ -6,8 +6,14 @@ def init_pdf():
     pdf.add_page()
     return pdf
 
-def generate_pdf(document , pdf):
+def generate_pdf(document , pdf,state):
     pdf.set_font("Arial", size=15)
+    if state == "orders":
+        pdf.set_text_color(0, 255, 0)
+    elif state == "threat":
+        pdf.set_text_color(255, 0, 0)
+    else:
+        pdf.set_text_color(0, 0, 0)
     with open("myfile.txt", 'w') as f:
         for key, value in document.items():
             f.write('%s:%s\n' % (key, value))
