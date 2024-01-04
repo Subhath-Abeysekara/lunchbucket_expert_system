@@ -1,13 +1,12 @@
-12:
-white rice:
-Carrot curry:
-Wattakka kalupola:
-Dhal Curry Kirata:
-Mushroom, Vege salad with Papadam:
-price:260
-packet_amount:1
-customer_code:4642
-order_code:63113
-delivery_time:11:30 AM
+24:
+carrot stew:
+Beatroot:
+Fish stew:
+Meat:
+price:300
+packet_amount:3
+customer_code:22222
+order_code:51575
+delivery_time:
 threat:False
 printed:True

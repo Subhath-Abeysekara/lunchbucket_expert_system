@@ -1,8 +1,8 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-import getByTwo
-import getByThree
-import finalSuitability
+# import getByTwo
+# import getByThree
+# import finalSuitability
 import getReport
 
 app = Flask(__name__)
@@ -15,95 +15,95 @@ image_url_background = "https://firebasestorage.googleapis.com/v0/b/meetingdetec
 def main():
     return "home"
 
-@app.route("/dev/lunch/suitability_for_two/<id1>/<id2>")
-@cross_origin()
-def suitability_for_two_lunch_dev(id1, id2):
-    try:
-        return getByTwo.twoSuitability_dev_lunch(id1=id1 , id2=id2)
-    except:
-        return {
-            "state": False,
-            "message": "error"
-        }
-
-@app.route("/dev/dinner/suitability_for_two/<id1>/<id2>")
-@cross_origin()
-def suitability_for_two_dinner_dev(id1, id2):
-    try:
-        return getByTwo.twoSuitability_dev_dinner(id1=id1 , id2=id2)
-    except:
-        return {
-            "state": False,
-            "message": "error"
-        }
-
-@app.route("/prod/lunch/suitability_for_two/<id1>/<id2>")
-@cross_origin()
-def suitability_for_two_lunch_prod(id1, id2):
-    try:
-        return getByTwo.twoSuitability_prod_lunch(id1=id1 , id2=id2)
-    except:
-        return {
-            "state": False,
-            "message": "error"
-        }
-
-@app.route("/prod/dinner/suitability_for_two/<id1>/<id2>")
-@cross_origin()
-def suitability_for_two_dinner_prod(id1, id2):
-    try:
-        return getByTwo.twoSuitability_prod_dinner(id1=id1 , id2=id2)
-    except:
-        return {
-            "state": False,
-            "message": "error"
-        }
-
-@app.route("/dev/lunch/suitability_for_three/<id1>/<id2>/<id3>")
-@cross_origin()
-def suitability_for_three_lunch_dev(id1, id2,id3):
-    try:
-        return getByThree.threeSuitability_dev_lunch(id1=id1 , id2=id2,id3=id3)
-    except:
-        return {
-            "state": False,
-            "message": "error"
-        }
-
-@app.route("/dev/dinner/suitability_for_three/<id1>/<id2>/<id3>")
-@cross_origin()
-def suitability_for_three_dinner_dev(id1, id2,id3):
-    try:
-        return getByThree.threeSuitability_dev_dinner(id1=id1 , id2=id2,id3=id3)
-    except:
-        return {
-            "state": False,
-            "message": "error"
-        }
-
-
-@app.route("/prod/lunch/suitability_for_three/<id1>/<id2>/<id3>")
-@cross_origin()
-def suitability_for_three_lunch_prod(id1, id2, id3):
-    try:
-        return getByThree.threeSuitability_prod_lunch(id1=id1, id2=id2, id3=id3)
-    except:
-        return {
-            "state": False,
-            "message": "error"
-        }
-
-
-@app.route("/prod/dinner/suitability_for_three/<id1>/<id2>/<id3>")
-@cross_origin()
-def suitability_for_three_dinner_prod(id1, id2, id3):
-    try:
-        return getByThree.threeSuitability_prod_dinner(id1=id1, id2=id2, id3=id3)
-    except:
-        return {
-            "state": False,
-            "message": "error"
-        }
+# @app.route("/dev/lunch/suitability_for_two/<id1>/<id2>")
+# @cross_origin()
+# def suitability_for_two_lunch_dev(id1, id2):
+#     try:
+#         return getByTwo.twoSuitability_dev_lunch(id1=id1 , id2=id2)
+#     except:
+#         return {
+#             "state": False,
+#             "message": "error"
+#         }
+#
+# @app.route("/dev/dinner/suitability_for_two/<id1>/<id2>")
+# @cross_origin()
+# def suitability_for_two_dinner_dev(id1, id2):
+#     try:
+#         return getByTwo.twoSuitability_dev_dinner(id1=id1 , id2=id2)
+#     except:
+#         return {
+#             "state": False,
+#             "message": "error"
+#         }
+#
+# @app.route("/prod/lunch/suitability_for_two/<id1>/<id2>")
+# @cross_origin()
+# def suitability_for_two_lunch_prod(id1, id2):
+#     try:
+#         return getByTwo.twoSuitability_prod_lunch(id1=id1 , id2=id2)
+#     except:
+#         return {
+#             "state": False,
+#             "message": "error"
+#         }
+#
+# @app.route("/prod/dinner/suitability_for_two/<id1>/<id2>")
+# @cross_origin()
+# def suitability_for_two_dinner_prod(id1, id2):
+#     try:
+#         return getByTwo.twoSuitability_prod_dinner(id1=id1 , id2=id2)
+#     except:
+#         return {
+#             "state": False,
+#             "message": "error"
+#         }
+#
+# @app.route("/dev/lunch/suitability_for_three/<id1>/<id2>/<id3>")
+# @cross_origin()
+# def suitability_for_three_lunch_dev(id1, id2,id3):
+#     try:
+#         return getByThree.threeSuitability_dev_lunch(id1=id1 , id2=id2,id3=id3)
+#     except:
+#         return {
+#             "state": False,
+#             "message": "error"
+#         }
+#
+# @app.route("/dev/dinner/suitability_for_three/<id1>/<id2>/<id3>")
+# @cross_origin()
+# def suitability_for_three_dinner_dev(id1, id2,id3):
+#     try:
+#         return getByThree.threeSuitability_dev_dinner(id1=id1 , id2=id2,id3=id3)
+#     except:
+#         return {
+#             "state": False,
+#             "message": "error"
+#         }
+#
+#
+# @app.route("/prod/lunch/suitability_for_three/<id1>/<id2>/<id3>")
+# @cross_origin()
+# def suitability_for_three_lunch_prod(id1, id2, id3):
+#     try:
+#         return getByThree.threeSuitability_prod_lunch(id1=id1, id2=id2, id3=id3)
+#     except:
+#         return {
+#             "state": False,
+#             "message": "error"
+#         }
+#
+#
+# @app.route("/prod/dinner/suitability_for_three/<id1>/<id2>/<id3>")
+# @cross_origin()
+# def suitability_for_three_dinner_prod(id1, id2, id3):
+#     try:
+#         return getByThree.threeSuitability_prod_dinner(id1=id1, id2=id2, id3=id3)
+#     except:
+#         return {
+#             "state": False,
+#             "message": "error"
+#         }
 
 @app.route("/dev/getReport/<meal>")
 @cross_origin()

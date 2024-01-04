@@ -33,6 +33,7 @@ def get_orders(collection_name , meal):
 def get_report_dev(meal):
     report = get_report(collection_name_report_dev ,doc_id_dev, meal)
     docs = get_orders(collection_name_order_dev , meal)
+    print(docs)
     pdf = init_pdf()
     pdf = generate_pdf(report , pdf,"")
     pdf.add_page()
@@ -43,25 +44,29 @@ def get_report_dev(meal):
     i = 0
     for doc in docs:
         i+=1
+        print(doc)
         report_new = {
             i:''
         }
-        for item in doc['items']:
-            report_new[item]=''
-        report_new['price'] = doc['price']
-        report_new['packet_amount'] = doc['packet_amount']
-        report_new['customer_code'] = doc['customer_code']
-        report_new['order_code'] = generate_code(str(doc['_id']))
-        report_new['delivery_time'] = doc['delivery_time']
-        report_new['threat'] = doc['threat']
-        report_new['printed'] = doc['printed']
+        try:
+            for item in doc['items']:
+                report_new[item] = ''
+            report_new['price'] = doc['price']
+            report_new['packet_amount'] = doc['packet_amount']
+            report_new['customer_code'] = doc['customer_code']
+            report_new['order_code'] = generate_code(str(doc['_id']))
+            report_new['delivery_time'] = doc['delivery_time']
+            report_new['threat'] = doc['threat']
+            report_new['printed'] = doc['printed']
+        except:
+            print("he")
+        print(i)
         if doc['printed']:
             state = "printed"
         else:
             state = ""
-            collection_name_order_prod.update_one({'_id': doc['_id']}, {'$set': {"printed": True}})
+            collection_name_order_dev.update_one({'_id': doc['_id']}, {'$set': {"printed": True}})
         pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else state)
-        collection_name_order_prod.update_one({'_id': doc['_id']}, {'$set': {"printed": True, }})
     print_pdf(pdf)
     return send_mail()
 
@@ -84,15 +89,18 @@ def get_report_prod(meal):
             i:''
         }
         print(doc)
-        for item in doc['items']:
-            report_new[item]=''
-        report_new['price'] = doc['price']
-        report_new['packet_amount'] = doc['packet_amount']
-        report_new['customer_code'] = doc['customer_code']
-        report_new['order_code'] = generate_code(str(doc['_id']))
-        report_new['delivery_time'] = doc['delivery_time']
-        report_new['threat'] = doc['threat']
-        report_new['printed'] = doc['printed']
+        try:
+            for item in doc['items']:
+                report_new[item] = ''
+            report_new['price'] = doc['price']
+            report_new['packet_amount'] = doc['packet_amount']
+            report_new['customer_code'] = doc['customer_code']
+            report_new['order_code'] = generate_code(str(doc['_id']))
+            report_new['delivery_time'] = doc['delivery_time']
+            report_new['threat'] = doc['threat']
+            report_new['printed'] = doc['printed']
+        except:
+            print("error")
         if doc['printed']:
             state = "printed"
         else:
@@ -101,4 +109,4 @@ def get_report_prod(meal):
         pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else state)
     print_pdf(pdf)
     return send_mail()
-# get_report_prod('Lunch')
+# get_report_dev('Lunch')
