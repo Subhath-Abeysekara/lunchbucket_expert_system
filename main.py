@@ -111,6 +111,7 @@ def main():
 @cross_origin()
 def get_report_dev(meal):
     try:
+        print(meal)
         return getReport.get_report_dev(meal=meal)
     except:
         return {
