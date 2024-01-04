@@ -1,12 +1,10 @@
-24:
-carrot stew:
-Beatroot:
-Fish stew:
-Meat:
-price:300
-packet_amount:3
-customer_code:22222
-order_code:51575
-delivery_time:
+20:
+Boil chicken with pasta:
+Pasta:
+price:550
+packet_amount:2
+customer_code:3925
+order_code:60608
+delivery_time:7.30 PM
 threat:False
 printed:True

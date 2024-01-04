@@ -49,8 +49,12 @@ def get_report_dev(meal):
             i:''
         }
         try:
-            for item in doc['items']:
-                report_new[item] = ''
+            if doc['order_type'] == "special":
+                report_new[doc['type']] = ''
+                report_new[doc['category']] = ''
+            else:
+                for item in doc['items']:
+                    report_new[item] = ''
             report_new['price'] = doc['price']
             report_new['packet_amount'] = doc['packet_amount']
             report_new['customer_code'] = doc['customer_code']
@@ -103,10 +107,13 @@ def get_report_prod(meal):
             print("error")
         if doc['printed']:
             state = "printed"
+            print("printed")
         else:
             state = ""
+            print("not printed")
             collection_name_order_prod.update_one({'_id': doc['_id']}, {'$set': {"printed": True}})
         pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else state)
+    print("he")
     print_pdf(pdf)
     return send_mail()
 # get_report_dev('Lunch')
