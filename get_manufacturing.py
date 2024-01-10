@@ -21,9 +21,9 @@ def documents(docs):
     return list(map(lambda doc:document(doc),docs))
 
 
-def get_manufacturing_dev(meal , delivery_place , limit):
+def get_manufacturing_dev(meal , delivery_place , limit,time):
     docs = collection_name_order_dev.find(
-        {'meal': meal, "delivery_status": False, "delivery_place": set_order_place(delivery_place)}).limit(limit)
+        {'meal': meal, "delivery_status": False, "delivery_place": set_order_place(delivery_place),"delivery_time":time}).limit(limit)
     print(docs)
     docs = list(docs)
     collection_name_manufactured_dev.delete_many(
@@ -38,9 +38,9 @@ def get_manufacturing_dev(meal , delivery_place , limit):
                         balance=collection_name_order_dev.count_documents({'meal': meal, "delivery_status": False, "delivery_place": set_order_place(delivery_place)}))
     return documents(docs)
 
-def get_manufacturing_prod(meal , delivery_place , limit):
+def get_manufacturing_prod(meal , delivery_place , limit,time):
     docs = collection_name_order_prod.find(
-        {'meal': meal, "delivery_status": False, "delivery_place": set_order_place(delivery_place)}).limit(limit)
+        {'meal': meal, "delivery_status": False, "delivery_place": set_order_place(delivery_place),"delivery_time":time}).limit(limit)
     print(docs)
     docs = list(docs)
     collection_name_manufactured_prod.delete_many(
