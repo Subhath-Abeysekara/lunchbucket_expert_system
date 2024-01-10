@@ -6,6 +6,7 @@ import finalSuitability
 # import getByThree
 # import finalSuitability
 import getReport
+import get_manufacturing
 
 app = Flask(__name__)
 CORS(app, resources={r"/": {"origins": "*"}})
@@ -166,6 +167,31 @@ def finalSuitability_prod():
             "message": "error"
         }
 
+# ************* MANUFACTURING ***************
+
+@app.route("/dev/manufacture/<meal>/<place>/<limit>")
+@cross_origin()
+def get_manufacture_dev(meal,place,limit):
+    try:
+        print(meal)
+        return get_manufacturing.get_manufacturing_dev(meal=meal,delivery_place=place,limit=int(limit))
+    except:
+        return {
+            "state": False,
+            "message": "error"
+        }
+
+@app.route("/prod/manufacture/<meal>/<place>/<limit>")
+@cross_origin()
+def get_manufacture_prod(meal,place,limit):
+    try:
+        print(meal)
+        return get_manufacturing.get_manufacturing_prod(meal=meal,delivery_place=place,limit=int(limit))
+    except:
+        return {
+            "state": False,
+            "message": "error"
+        }
 
 if __name__ == '__main__':
     app.debug = True

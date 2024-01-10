@@ -30,13 +30,8 @@ def get_orders(collection_name , meal):
     docs = collection_name.find({'meal':meal})
     return docs
 
-def get_report_dev(meal):
-    report = get_report(collection_name_report_dev ,doc_id_dev, meal)
-    docs = get_orders(collection_name_order_dev , meal)
+def create_report(docs,pdf,update_state,balance):
     print(docs)
-    pdf = init_pdf()
-    pdf = generate_pdf(report , pdf,"")
-    pdf.add_page()
     report_orders= {
         'ORDERS':''
     }
@@ -44,10 +39,10 @@ def get_report_dev(meal):
     i = 0
     for doc in docs:
         i+=1
-        print(doc)
         report_new = {
             i:''
         }
+        print(doc)
         try:
             if doc['order_type'] == "special":
                 report_new[doc['type']] = ''
@@ -63,16 +58,29 @@ def get_report_dev(meal):
             report_new['threat'] = doc['threat']
             report_new['printed'] = doc['printed']
         except:
-            print("he")
-        print(i)
+            print("error")
         if doc['printed']:
             state = "printed"
+            print("printed")
         else:
             state = ""
-            collection_name_order_dev.update_one({'_id': doc['_id']}, {'$set': {"printed": True}})
+            print("not printed")
+            if update_state:
+                collection_name_order_prod.update_one({'_id': doc['_id']}, {'$set': {"printed": True}})
+            else:
+                report_new['BALANCED ORDERS'] = str(balance)
         pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else state)
+    print("he")
     print_pdf(pdf)
     return send_mail()
+def get_report_dev(meal):
+    report = get_report(collection_name_report_dev ,doc_id_dev, meal)
+    docs = get_orders(collection_name_order_dev , meal)
+    print(docs)
+    pdf = init_pdf()
+    pdf = generate_pdf(report , pdf,"")
+    pdf.add_page()
+    return create_report(docs,pdf,True,0)
 
 def get_report_prod(meal):
     report = get_report(collection_name_report_prod ,doc_id_prod, meal)
@@ -82,38 +90,8 @@ def get_report_prod(meal):
     pdf = init_pdf()
     pdf = generate_pdf(report , pdf , "")
     pdf.add_page()
-    report_orders= {
-        'ORDERS':''
-    }
-    pdf = generate_pdf(report_orders, pdf,"")
-    i = 0
-    for doc in docs:
-        i+=1
-        report_new = {
-            i:''
-        }
-        print(doc)
-        try:
-            for item in doc['items']:
-                report_new[item] = ''
-            report_new['price'] = doc['price']
-            report_new['packet_amount'] = doc['packet_amount']
-            report_new['customer_code'] = doc['customer_code']
-            report_new['order_code'] = generate_code(str(doc['_id']))
-            report_new['delivery_time'] = doc['delivery_time']
-            report_new['threat'] = doc['threat']
-            report_new['printed'] = doc['printed']
-        except:
-            print("error")
-        if doc['printed']:
-            state = "printed"
-            print("printed")
-        else:
-            state = ""
-            print("not printed")
-            collection_name_order_prod.update_one({'_id': doc['_id']}, {'$set': {"printed": True}})
-        pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else state)
-    print("he")
-    print_pdf(pdf)
-    return send_mail()
-# get_report_dev('Lunch')
+    return create_report(docs,pdf,True,0)
+
+def get_delivery_report(docs,balance):
+    pdf = init_pdf()
+    return create_report(docs, pdf,False,balance)

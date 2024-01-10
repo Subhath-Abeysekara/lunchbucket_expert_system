@@ -29,6 +29,13 @@ def connect_mongo_order_dev():
     collection_name = db_Name["order"]
     return collection_name
 
+def connect_mongo_manufactured_dev():
+    CONNECTION_STRING = "mongodb+srv://lunchbucket:root@cluster0.pzgdm0e.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(CONNECTION_STRING)
+    db_Name = client['menu']
+    collection_name = db_Name["manufactured"]
+    return collection_name
+
 def connect_mongo_report_prod():
     CONNECTION_STRING = "mongodb+srv://lunchbucketofficial:tLJyGjIoBq558dgK@lunchbucket.plo5voq.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(CONNECTION_STRING)
@@ -40,4 +47,11 @@ def connect_mongo_order_prod():
     client = MongoClient(CONNECTION_STRING)
     db_Name = client['menu']
     collection_name = db_Name["order"]
+    return collection_name
+
+def connect_mongo_manufactured_prod():
+    CONNECTION_STRING = "mongodb+srv://lunchbucketofficial:tLJyGjIoBq558dgK@lunchbucket.plo5voq.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(CONNECTION_STRING)
+    db_Name = client['menu']
+    collection_name = db_Name["manufactured"]
     return collection_name
