@@ -1,14 +1,1 @@
-2:
-White rice:
-Gotukola Mallum:
-Tomato Stew:
-Carrot Potato Stew:
-Chicken Devel:
-price:510
-packet_amount:1
-customer_code:15866
-order_code:8643
-delivery_time:12:30 PM
-threat:False
-printed:False
-BALANCED ORDERS:6
+BALANCE ORDERS:2

@@ -67,10 +67,14 @@ def create_report(docs,pdf,update_state,balance):
             print("not printed")
             if update_state:
                 collection_name_order_prod.update_one({'_id': doc['_id']}, {'$set': {"printed": True}})
-            else:
-                report_new['BALANCED ORDERS'] = str(balance)
         pdf = generate_pdf(report_new,pdf,"threat" if doc['threat'] else state)
     print("he")
+    if not update_state:
+        report_orders = {
+            'BALANCE ORDERS': str(balance)
+        }
+        pdf.add_page()
+        pdf = generate_pdf(report_orders, pdf, "")
     print_pdf(pdf)
     return send_mail()
 def get_report_dev(meal):
