@@ -26,6 +26,8 @@ def get_manufacturing_dev(meal , delivery_place , limit):
         {'meal': meal, "delivery_status": False, "delivery_place": set_order_place(delivery_place)}).limit(limit)
     print(docs)
     docs = list(docs)
+    collection_name_manufactured_dev.delete_many(
+        {'meal': meal, "delivery_place": set_order_place(delivery_place=delivery_place)})
     for doc in docs:
         print(doc)
         collection_name_order_dev.update_one({'_id': doc['_id']}, {'$set': {
@@ -41,6 +43,8 @@ def get_manufacturing_prod(meal , delivery_place , limit):
         {'meal': meal, "delivery_status": False, "delivery_place": set_order_place(delivery_place)}).limit(limit)
     print(docs)
     docs = list(docs)
+    collection_name_manufactured_prod.delete_many(
+        {'meal': meal, "delivery_place": set_order_place(delivery_place=delivery_place)})
     for doc in docs:
         print(doc)
         collection_name_order_prod.update_one({'_id': doc['_id']}, {'$set': {
