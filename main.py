@@ -170,26 +170,15 @@ def finalSuitability_prod():
 @app.route("/dev/manufacture/<meal>/<place>/<limit>/<time>")
 @cross_origin()
 def get_manufacture_dev(meal,place,limit,time):
-    try:
-        print(meal)
-        return get_manufacturing.get_manufacturing_dev(meal=meal,delivery_place=place,limit=int(limit),time=time)
-    except:
-        return {
-            "state": False,
-            "message": "error"
-        }
+    print(meal)
+    return get_manufacturing.get_manufacturing_dev(meal=meal, delivery_place=place, limit=int(limit), time=time)
 
 @app.route("/prod/manufacture/<meal>/<place>/<limit>/<time>")
 @cross_origin()
 def get_manufacture_prod(meal,place,limit,time):
-    try:
-        print(meal)
-        return get_manufacturing.get_manufacturing_prod(meal=meal,delivery_place=place,limit=int(limit),time=time)
-    except:
-        return {
-            "state": False,
-            "message": "error"
-        }
+    print(meal)
+    return get_manufacturing.get_manufacturing_prod(meal=meal, delivery_place=place, limit=int(limit), time=time)
+
 
 if __name__ == '__main__':
     app.debug = True
