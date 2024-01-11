@@ -71,7 +71,7 @@ def create_report(docs,pdf,update_state,balance):
     print("he")
     if not update_state:
         report_orders = {
-            'BALANCE ORDERS': str(balance)
+            'BALANCE ORDERS FOR THIS TIME ': str(balance)
         }
         pdf.add_page()
         pdf = generate_pdf(report_orders, pdf, "")
