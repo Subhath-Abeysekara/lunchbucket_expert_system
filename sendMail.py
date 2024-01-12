@@ -11,7 +11,7 @@ def send_mail():
     sender_email = 'icodeinnovahostingservice@gmail.com'  # Replace with your email address
     sender_password = 'hnykgvqgyvorghrb'
     # put the email of the receiver here
-    receiver = 'subath.abeysekara@gmail.com'
+    receiver = 'i211.lbreports@gmail.com'
 
     # Setup the MIME
     message = MIMEMultipart()

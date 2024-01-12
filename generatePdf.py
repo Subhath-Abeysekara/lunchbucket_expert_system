@@ -27,6 +27,44 @@ def generate_pdf(document , pdf,state):
 
 def print_pdf(pdf):
     pdf.output("GFG.pdf")
+class PDFWithTable(FPDF):
+    def header(self):
+        self.set_font('Arial', 'B', 12)
+        self.cell(0, 10, 'Order Report', 0, 1, 'C')
+
+    def footer(self):
+        self.set_y(-15)
+        self.set_font('Arial', 'I', 8)
+        self.cell(0, 10, 'Page %s' % self.page_no(), 0, 0, 'C')
+
+    def add_table(self, data, header=True):
+        if header:
+            # Add table header
+            self.set_font('Arial', 'B', 12)
+            i=0
+            for col in data[0]:
+                if i == 0:
+                    self.cell(90, 10, col, 1)
+                    i+=1
+                else:
+                    self.cell(20, 10, col, 1)
+            self.ln()
+
+        # Add table rows
+        self.set_font('Arial', '', 12)
+        for row in data[1:]:
+            i=0
+            for col in row:
+                self.set_text_color(0, 0, 0)
+                if i==0:
+                    self.cell(90, 10, str(col), 1)
+                    i+=1
+                else:
+                    if i % 2 == 0:
+                        self.set_text_color(255, 0, 0)
+                    self.cell(10, 10, str(col), 1)
+                    i+=1
+            self.ln()
 
 document = {
     'ORDERS':'',
