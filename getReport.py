@@ -81,9 +81,9 @@ def create_report(collection_name,docs,pdf,update_state,balance):
         pdf = generate_pdf(report_orders, pdf, "")
     print_pdf(pdf)
     return send_mail()
-def create_table(document,collection_name,report_id):
-    old_document = collection_name.find_one({'_id':ObjectId(report_id)})
-    collection_name.update_one({'_id': ObjectId(report_id)}, {'$set': document})
+def create_table(document,collection_name,report_id,meal):
+    old_document = collection_name.find_one({'_id':ObjectId(report_id)})[meal.lower()]
+    collection_name.update_one({'_id': ObjectId(report_id)}, {'$set': {meal.lower():document}})
     all_keys = document.keys()
     key_list = list(all_keys)
     print(key_list)
@@ -113,7 +113,7 @@ def get_report_dev(meal):
     docs = get_orders(collection_name_order_dev , meal)
     print(docs)
     return create_report(collection_name_order_dev,docs,create_table(document=report,collection_name=collection_name_old_report_dev,
-                                                                     report_id=reported_id_dev),True,0)
+                                                                     report_id=reported_id_dev,meal=meal),True,0)
 
 def get_report_prod(meal):
     report = get_report(collection_name_report_prod ,doc_id_prod, meal)
@@ -122,7 +122,7 @@ def get_report_prod(meal):
     print(docs)
     return create_report(collection_name_order_prod,docs,create_table(document=report,
                                                                       collection_name=collection_name_old_report_prod,
-                                                                      report_id=reported_id_prod),True,0)
+                                                                      report_id=reported_id_prod,meal=meal),True,0)
 
 def get_delivery_report(docs,balance,collection_name):
     pdf = init_pdf()
