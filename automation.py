@@ -5,7 +5,7 @@ from getReport import reported_id_prod, collection_name_old_report_prod
 from time_utc import get_utc_time_count
 
 def call_delete_api(meal):
-        url = f"https://m9sbeatlg0.execute-api.ap-south-1.amazonaws.com/prod/{meal}"
+        url = f"https://m9sbeatlg0.execute-api.ap-south-1.amazonaws.com/prod/deleteOrders/{meal}"
         response = requests.delete(url=url)
         print(response)
         return
