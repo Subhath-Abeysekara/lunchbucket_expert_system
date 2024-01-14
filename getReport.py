@@ -87,8 +87,8 @@ def create_table(document,collection_name,report_id,meal):
     all_keys = document.keys()
     key_list = list(all_keys)
     print(key_list)
-    data = [['Item', "11:30", "12.30", "2.00", "7.30", "8.30"]]
-    time_keys = ["11.30", "12.30", "2.00", "7.30", "8.30"]
+    data = [['Item', "11:00", "12.30", "2.00", "7.30", "8.30"]]
+    time_keys = ["11.00", "12.30", "2.00", "7.30", "8.30"]
     for key in key_list:
         document_ = document[key]
         data_ = [key]

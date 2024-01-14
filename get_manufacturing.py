@@ -16,7 +16,7 @@ def set_order_place(delivery_place):
 def set_order_time(time):
     try:
         if "11" in time.lower():
-            return "11:30 AM"
+            return "11:00 AM"
         elif "12" in time.lower():
             return "12.30 PM"
         elif "2" in time.lower():
@@ -26,7 +26,7 @@ def set_order_time(time):
         elif "8" in time.lower():
             return "8.30 PM"
     except:
-        return "11.30 PM"
+        return "11.00 AM"
 
 def document(doc):
     doc['id'] = str(doc['_id'])
