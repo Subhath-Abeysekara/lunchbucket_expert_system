@@ -1,5 +1,5 @@
 def returnSuitabilityOBJ(x, y):
     return {
         "id": x,
-        "suitability": y
+        "suitability": round(y,2)
     }

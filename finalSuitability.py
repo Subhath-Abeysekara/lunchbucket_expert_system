@@ -10,7 +10,7 @@ def get_suitability(param_list , df):
         df2 = df.loc[df['number'] == param_list[i]]
         for j in range(i + 1, len(param_list)):
             total_suitability += int(df2[str(param_list[j])])
-    return total_suitability / 6
+    return round(total_suitability / 6,2)
 
 def final_dev(param_list):
     df = csv_dev
