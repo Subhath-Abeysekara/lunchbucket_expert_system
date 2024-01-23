@@ -18,15 +18,15 @@ def set_order_time(time):
         if "11" in time.lower():
             return "11:00 AM"
         elif "12" in time.lower():
-            return "12.30 PM"
+            return "12:30 PM"
         elif "2" in time.lower():
-            return "2.00 PM"
+            return "2:00 PM"
         elif "7" in time.lower():
-            return "7.30 PM"
+            return "7:30 PM"
         elif "8" in time.lower():
-            return "8.30 PM"
+            return "8:30 PM"
     except:
-        return "11.00 AM"
+        return "11:00 AM"
 
 def document(doc):
     doc['id'] = str(doc['_id'])
