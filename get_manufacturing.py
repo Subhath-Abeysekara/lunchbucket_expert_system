@@ -39,7 +39,10 @@ def find_nearest_key(dictionary, target):
     nearest_key = min(dictionary, key=lambda x: abs(dictionary[x] - target))
     return nearest_key
 def get_optimal_manufactures(collection ,meal , delivery_place , limit,time):
-    cursor = collection.find({'meal': meal, "delivery_status": False, "delivery_place": set_order_place(delivery_place),"delivery_time":set_order_time(time)})
+    cursor = collection.find({'meal': meal, "delivery_status": False,
+                              "delivery_place": set_order_place(delivery_place),
+                              "delivery_time":set_order_time(time),
+                              'order_status':True})
     cursor = list(cursor)
     codes = [doc["customer_code"] for doc in cursor]
     print(codes)
@@ -71,47 +74,34 @@ def get_optimal_manufactures(collection ,meal , delivery_place , limit,time):
     except:
         return documents
 
-
-def get_manufacturing_dev(meal , delivery_place , limit,time):
-    docs = get_optimal_manufactures(collection=collection_name_order_dev ,meal=meal,
-                                    delivery_place=delivery_place,
-                                    limit=limit , time=time)
-    print(docs)
-    docs = list(docs)
-    collection_name_manufactured_dev.delete_many(
-        {'meal': meal, "delivery_place": set_order_place(delivery_place=delivery_place)})
-    for doc in docs:
-        print(doc)
-        collection_name_order_dev.update_one({'_id': doc['_id']}, {'$set': {
-            "delivery_status": True
-        }})
-        collection_name_manufactured_dev.insert_one(doc)
-    get_delivery_report(docs=docs,
-                        balance=collection_name_order_dev.count_documents({'meal': meal, "delivery_status": False,
-                                                                           "delivery_place": set_order_place(delivery_place),
-                                                                           "delivery_time":set_order_time(time)}),
-                        collection_name=collection_name_order_dev)
-    return documents(docs)
-
-def get_manufacturing_prod(meal , delivery_place , limit,time):
-    docs = get_optimal_manufactures(collection=collection_name_order_prod, meal=meal,
+def manufacturing(collection_name_manufactured , collection_name_order , meal , delivery_place , limit,time):
+    docs = get_optimal_manufactures(collection=collection_name_order, meal=meal,
                                     delivery_place=delivery_place,
                                     limit=limit, time=time)
     print(docs)
     docs = list(docs)
-    collection_name_manufactured_prod.delete_many(
+    collection_name_manufactured.delete_many(
         {'meal': meal, "delivery_place": set_order_place(delivery_place=delivery_place)})
     for doc in docs:
         print(doc)
-        collection_name_order_prod.update_one({'_id': doc['_id']}, {'$set': {
+        collection_name_order.update_one({'_id': doc['_id']}, {'$set': {
             "delivery_status": True
         }})
-        collection_name_manufactured_prod.insert_one(doc)
+        collection_name_manufactured.insert_one(doc)
     get_delivery_report(docs=docs,
-                        balance=collection_name_order_prod.count_documents({'meal': meal, "delivery_status": False,
-                                                                            "delivery_place": set_order_place(delivery_place),
-                                                                            "delivery_time":set_order_time(time)}),
-                        collection_name=collection_name_order_prod)
+                        balance=collection_name_order.count_documents({'meal': meal, "delivery_status": False,
+                                                                           "delivery_place": set_order_place(
+                                                                               delivery_place),
+                                                                           "delivery_time": set_order_time(time),
+                                                                           'order_status': True}),
+                        collection_name=collection_name_order)
     return documents(docs)
+def get_manufacturing_dev(meal , delivery_place , limit,time):
+    return manufacturing(collection_name_manufactured_dev , collection_name_order_dev ,
+                         meal , delivery_place , limit,time)
+
+def get_manufacturing_prod(meal , delivery_place , limit,time):
+    return manufacturing(collection_name_manufactured_prod , collection_name_manufactured_prod,
+                         meal , delivery_place , limit,time)
 
 # print(get_optimal_manufactures(collection_name_order_dev,"Lunch","front",2,"11:30 AM"))

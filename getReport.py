@@ -31,7 +31,7 @@ def get_report(collection_name , id , meal):
    return report_doc[item_name]
 
 def get_orders(collection_name , meal):
-    docs = collection_name.find({'meal':meal})
+    docs = collection_name.find({'meal':meal,'order_status':True})
     return docs
 def create_report(collection_name,docs,pdf,update_state,balance):
     print(docs)
