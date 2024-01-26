@@ -56,7 +56,7 @@ def get_optimal_manufactures(collection ,meal , delivery_place , limit,time):
     try:
         max_code = max(unique_values_dict, key=unique_values_dict.get)
         filtered_objects = list(filter(lambda obj: obj.get("customer_code") == max_code, cursor))
-        packet_list = list(map(lambda x: x['packet_count'], filtered_objects))
+        packet_list = list(map(lambda x: x['packet_amount'], filtered_objects))
         documents += filtered_objects
         packets_count+=sum(packet_list)
         while True:
@@ -65,7 +65,7 @@ def get_optimal_manufactures(collection ,meal , delivery_place , limit,time):
                 del unique_values_dict[max_code]
                 nearest_code = find_nearest_key(unique_values_dict, difference)
                 filtered_objects = list(filter(lambda obj: obj.get("customer_code") == nearest_code, cursor))
-                packet_list = list(map(lambda x: x['packet_count'], filtered_objects))
+                packet_list = list(map(lambda x: x['packet_amount'], filtered_objects))
                 new_pack_count = sum(packet_list)
                 if new_pack_count + packets_count - limit > 4 or unique_values_dict == {}:
                     return documents
