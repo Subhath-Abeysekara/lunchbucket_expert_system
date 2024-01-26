@@ -52,23 +52,26 @@ def get_optimal_manufactures(collection ,meal , delivery_place , limit,time):
     unique_values_dict = dict(unique_values_with_frequency)
     print(unique_values_dict)
     documents = []
+    packets_count = 0
     try:
         max_code = max(unique_values_dict, key=unique_values_dict.get)
         filtered_objects = list(filter(lambda obj: obj.get("customer_code") == max_code, cursor))
+        packet_list = list(map(lambda x: x['packet_count'], filtered_objects))
         documents += filtered_objects
-        max_freq = unique_values_dict[max_code]
+        packets_count+=sum(packet_list)
         while True:
-            if max_freq < limit:
-                difference = limit - max_freq
+            if packets_count < limit:
+                difference = limit - packets_count
                 del unique_values_dict[max_code]
                 nearest_code = find_nearest_key(unique_values_dict, difference)
-                nearest_freq = unique_values_dict[nearest_code]
-                if nearest_freq + max_freq - limit > 4 or unique_values_dict == {}:
+                filtered_objects = list(filter(lambda obj: obj.get("customer_code") == nearest_code, cursor))
+                packet_list = list(map(lambda x: x['packet_count'], filtered_objects))
+                new_pack_count = sum(packet_list)
+                if new_pack_count + packets_count - limit > 4 or unique_values_dict == {}:
                     return documents
                 else:
-                    filtered_objects = list(filter(lambda obj: obj.get("customer_code") == nearest_code, cursor))
                     documents += filtered_objects
-                    max_freq += nearest_freq
+                    packets_count += new_pack_count
             else:
                 return documents
     except:
