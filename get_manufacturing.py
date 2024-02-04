@@ -104,7 +104,7 @@ def get_manufacturing_dev(meal , delivery_place , limit,time):
                          meal , delivery_place , limit,time)
 
 def get_manufacturing_prod(meal , delivery_place , limit,time):
-    return manufacturing(collection_name_manufactured_prod , collection_name_manufactured_prod,
+    return manufacturing(collection_name_manufactured_prod , collection_name_order_prod,
                          meal , delivery_place , limit,time)
 
 # print(get_optimal_manufactures(collection_name_order_dev,"Lunch","front",2,"11:30 AM"))
