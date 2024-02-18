@@ -3,8 +3,8 @@ import boto3
 from io import StringIO
 
 # Set your AWS credentials and region
-aws_access_key_id = 'AKIASKX7ELKOUAHLYEVB'
-aws_secret_access_key = 'MiqO6OI5m7VQPfmfvDmvVH7n+eUHL7o57vYlNsis'
+aws_access_key_id = 'AKIA5FTZCKIWQHHPKXUA'
+aws_secret_access_key = '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'
 aws_region = 'ap-south-1'
 
 # Set the S3 bucket and file path
