@@ -1,8 +1,8 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-import getByTwo
-import getByThree
-import finalSuitability
+# import getByTwo
+# import getByThree
+# import finalSuitability
 import getReport
 import get_manufacturing
 from apscheduler.schedulers.background import BackgroundScheduler
