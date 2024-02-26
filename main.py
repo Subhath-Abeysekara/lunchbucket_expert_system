@@ -4,6 +4,7 @@ from flask_cors import CORS, cross_origin
 # import getByThree
 # import finalSuitability
 import getReport
+import getSnackerReport
 import get_manufacturing
 from apscheduler.schedulers.background import BackgroundScheduler
 from automation import deleteOrders
@@ -129,6 +130,29 @@ def get_report_dev(meal):
 def get_report_prod(meal):
     try:
         return getReport.get_report_prod(meal=meal)
+    except:
+        return {
+            "state": False,
+            "message": "error"
+        }
+
+
+@app.route("/dev/getSnackersReport")
+@cross_origin()
+def get_snackers_report_dev():
+    try:
+        return getSnackerReport.get_report_dev()
+    except:
+        return {
+            "state": False,
+            "message": "error"
+        }
+
+@app.route("/prod/getSnackersReport")
+@cross_origin()
+def get_snackers_report_prod():
+    try:
+        return getSnackerReport.get_report_prod()
     except:
         return {
             "state": False,
