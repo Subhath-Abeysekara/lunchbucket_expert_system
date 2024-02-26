@@ -39,41 +39,57 @@ def find_nearest_key(dictionary, target):
     nearest_key = min(dictionary, key=lambda x: abs(dictionary[x] - target))
     return nearest_key
 def get_optimal_manufactures(collection ,meal , delivery_place , limit,time):
-    cursor = collection.find({'meal': meal, "delivery_status": False,
+    print(delivery_place)
+    print(set_order_place(delivery_place))
+    print(set_order_time(time))
+    cursor = collection.find({'meal': meal,"delivery_status": False,
                               "delivery_place": set_order_place(delivery_place),
-                              "delivery_time":set_order_time(time),
-                              'order_status':True})
+                              "delivery_time": set_order_time(time),
+                              'order_status': True
+                              })
     cursor = list(cursor)
+    print(cursor)
     codes = [doc["customer_code"] for doc in cursor]
     print(codes)
     counter = Counter(codes)
     unique_values_with_frequency = counter.items()
     print(unique_values_with_frequency)
     unique_values_dict = dict(unique_values_with_frequency)
-    print(unique_values_dict)
+    print(f"unique_packets {unique_values_dict}")
     documents = []
-    packets_count = 0
     try:
         max_code = max(unique_values_dict, key=unique_values_dict.get)
+        print(max_code)
         filtered_objects = list(filter(lambda obj: obj.get("customer_code") == max_code, cursor))
-        packet_list = list(map(lambda x: x['packet_amount'], filtered_objects))
+        print(len(filtered_objects))
         documents += filtered_objects
-        packets_count+=sum(packet_list)
+        print(len(documents))
+        del unique_values_dict[max_code]
+        print(unique_values_dict)
         while True:
-            if packets_count < limit:
-                difference = limit - packets_count
-                del unique_values_dict[max_code]
-                nearest_code = find_nearest_key(unique_values_dict, difference)
-                filtered_objects = list(filter(lambda obj: obj.get("customer_code") == nearest_code, cursor))
-                packet_list = list(map(lambda x: x['packet_amount'], filtered_objects))
-                new_pack_count = sum(packet_list)
-                if new_pack_count + packets_count - limit > 4 or unique_values_dict == {}:
-                    return documents
-                else:
+            max_code = max(unique_values_dict, key=unique_values_dict.get)
+            print(max_code)
+            filtered_objects = list(filter(lambda obj: obj.get("customer_code") == max_code, cursor))
+            print(len(filtered_objects))
+            if len(documents) + unique_values_dict[max_code] > limit + 4:
+                while True:
+                    nearest_key = find_nearest_key(unique_values_dict, limit - len(documents) + 4)
+                    print(nearest_key)
+                    print(unique_values_dict[nearest_key])
+                    if len(documents) + unique_values_dict[nearest_key] > limit + 4:
+                        break
+                    filtered_objects = list(filter(lambda obj: obj.get("customer_code") == nearest_key, cursor))
+                    print(len(filtered_objects))
                     documents += filtered_objects
-                    packets_count += new_pack_count
-            else:
-                return documents
+                    print(len(documents))
+                    del unique_values_dict[nearest_key]
+                    print(unique_values_dict)
+                break
+            documents += filtered_objects
+            print(len(documents))
+            del unique_values_dict[max_code]
+            print(unique_values_dict)
+        return documents
     except:
         return documents
 
@@ -98,6 +114,7 @@ def manufacturing(collection_name_manufactured , collection_name_order , meal , 
                                                                            "delivery_time": set_order_time(time),
                                                                            'order_status': True}),
                         collection_name=collection_name_order)
+    print(len(docs))
     return documents(docs)
 def get_manufacturing_dev(meal , delivery_place , limit,time):
     return manufacturing(collection_name_manufactured_dev , collection_name_order_dev ,
@@ -108,3 +125,4 @@ def get_manufacturing_prod(meal , delivery_place , limit,time):
                          meal , delivery_place , limit,time)
 
 # print(get_optimal_manufactures(collection_name_order_dev,"Lunch","front",2,"11:30 AM"))
+# get_manufacturing_dev("Lunch" , "Back gate" , 20,"2")
