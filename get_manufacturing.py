@@ -25,6 +25,12 @@ def set_order_time(time):
             return "7:30 PM"
         elif "8" in time.lower():
             return "8:30 PM"
+        elif "3" in time.lower():
+            return "3:30"
+        elif "4" in time.lower():
+            return "4:30"
+        elif "5" in time.lower():
+            return "5:30"
     except:
         return "11:00 AM"
 
@@ -67,17 +73,22 @@ def get_optimal_manufactures(collection ,meal , delivery_place , limit,time):
         del unique_values_dict[max_code]
         print(unique_values_dict)
         while True:
+            if unique_values_dict == {}:
+                break
             max_code = max(unique_values_dict, key=unique_values_dict.get)
             print(max_code)
             filtered_objects = list(filter(lambda obj: obj.get("customer_code") == max_code, cursor))
             print(len(filtered_objects))
             if len(documents) + unique_values_dict[max_code] > limit + 4:
                 while True:
+                    if unique_values_dict == {}:
+                        break
                     nearest_key = find_nearest_key(unique_values_dict, limit - len(documents) + 4)
                     print(nearest_key)
                     print(unique_values_dict[nearest_key])
                     if len(documents) + unique_values_dict[nearest_key] > limit + 4:
-                        break
+                        del unique_values_dict[nearest_key]
+                        continue
                     filtered_objects = list(filter(lambda obj: obj.get("customer_code") == nearest_key, cursor))
                     print(len(filtered_objects))
                     documents += filtered_objects
