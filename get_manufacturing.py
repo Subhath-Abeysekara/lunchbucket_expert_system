@@ -21,10 +21,18 @@ def set_order_time(time):
             return "12:30 PM"
         elif "2" in time.lower():
             return "2:00 PM"
+        elif "1" in time.lower() and "3" in time.lower():
+            return "1:30"
+        elif "1" in time.lower():
+            return "1:00"
         elif "7" in time.lower():
             return "7:30 PM"
         elif "8" in time.lower():
             return "8:30 PM"
+        elif "9" in time.lower() and "3" in time.lower():
+            return "9:30"
+        elif "9" in time.lower():
+            return "9:00"
         elif "3" in time.lower():
             return "3:30"
         elif "4" in time.lower():
