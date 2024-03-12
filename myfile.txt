@@ -1,10 +1,1 @@
-32:
-Snackerrrrs:
-Lunch Bucket Authentic:
-price:540.0
-packet_amount:2
-customer_code:59603
-order_code:54709
-delivery_time:5:30 PM
-threat:False
-printed:True
+BALANCE ORDERS FOR THIS TIME :0

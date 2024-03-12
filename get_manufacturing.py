@@ -22,23 +22,23 @@ def set_order_time(time):
         elif "2" in time.lower():
             return "2:00 PM"
         elif "1" in time.lower() and "3" in time.lower():
-            return "1:30"
+            return "1:30 PM"
         elif "1" in time.lower():
-            return "1:00"
+            return "1:00 PM"
         elif "7" in time.lower():
             return "7:30 PM"
         elif "8" in time.lower():
             return "8:30 PM"
         elif "9" in time.lower() and "3" in time.lower():
-            return "9:30"
+            return "9:30 PM"
         elif "9" in time.lower():
-            return "9:00"
+            return "9:00 PM"
         elif "3" in time.lower():
-            return "3:30"
+            return "3:30 PM"
         elif "4" in time.lower():
-            return "4:30"
+            return "4:30 PM"
         elif "5" in time.lower():
-            return "5:30"
+            return "5:30 PM"
     except:
         return "11:00 AM"
 
@@ -144,4 +144,4 @@ def get_manufacturing_prod(meal , delivery_place , limit,time):
                          meal , delivery_place , limit,time)
 
 # print(get_optimal_manufactures(collection_name_order_dev,"Lunch","front",2,"11:30 AM"))
-# get_manufacturing_dev("Lunch" , "Back gate" , 20,"2")
+get_manufacturing_dev("Lunch" , "Back gate" , 20,"13")
