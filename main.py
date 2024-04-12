@@ -8,6 +8,8 @@ import getSnackerReport
 import get_manufacturing
 from apscheduler.schedulers.background import BackgroundScheduler
 from automation import deleteOrders
+from select_limits import select_best_limits
+from select_menu import select_best_menu
 
 app = Flask(__name__)
 CORS(app, resources={r"/": {"origins": "*"}})
@@ -159,17 +161,28 @@ def get_snackers_report_prod():
             "message": "error"
         }
 
-@app.route("/dev/finalSuitability", methods=["POST"])
+
+# ************ MACHINE LEARNING *********************
+
+@app.route("/prod/predict_limits", methods=["POST"])
 @cross_origin()
-def finalSuitability_dev():
+def predict_limits_prod():
     try:
         if request.data:
-            print(request.json)
-            return finalSuitability.final_dev(request.json['ids'])
+            body = request.json
+            holiday = body['holiday']
+            whether = body['whether']
+            temperature = body['temperature']
+            meal = body['meal']
+            return {
+                'state': True,
+                'data': select_best_limits(meal= meal , holiday =holiday,whether=whether,
+                                       temperature=temperature)
+            }
         else:
             return {
                 "state": False,
-                "message": "error no body"
+                "message": "no body"
             }
     except:
         return {
@@ -177,17 +190,25 @@ def finalSuitability_dev():
             "message": "error"
         }
 
-@app.route("/prod/finalSuitability", methods=["POST"])
+@app.route("/prod/predict_menu", methods=["POST"])
 @cross_origin()
-def finalSuitability_prod():
+def predict_menu_prod():
     try:
         if request.data:
-            print(request.json)
-            return finalSuitability.final_prod(request.json['ids'])
+            body = request.json
+            holiday = body['holiday']
+            whether = body['whether']
+            temperature = body['temperature']
+            meal = body['meal']
+            return {
+                'state': True,
+                'data': select_best_menu(meal=meal, holiday=holiday, whether=whether,
+                                         temperature=temperature)
+            }
         else:
             return {
                 "state": False,
-                "message": "error no body"
+                "message": "no body"
             }
     except:
         return {
