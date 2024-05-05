@@ -47,12 +47,17 @@ def create_report(collection_name,docs,pdf,update_state,balance):
         }
         print(doc)
         try:
+            gravy = doc['gravy']
+        except:
+            gravy = 'Milk Gravy'
+        try:
             if doc['order_type'] == "special":
                 report_new[doc['type']] = ''
                 report_new[doc['category']] = ''
             else:
                 for item in doc['items']:
                     report_new[item] = ''
+            report_new['gravy'] = gravy
             report_new['price'] = doc['price']
             report_new['packet_amount'] = doc['packet_amount']
             report_new['customer_code'] = doc['customer_code']
