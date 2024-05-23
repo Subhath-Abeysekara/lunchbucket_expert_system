@@ -6,8 +6,8 @@ from datetime import datetime, timedelta
 collection_name = connect_mongo_menu()
 
 
-def get_today_menu():
-  url = "https://r36pslzyv8.execute-api.ap-south-1.amazonaws.com/prod/lunch/getMenus"
+def get_today_menu(meal):
+  url = f"https://r36pslzyv8.execute-api.ap-south-1.amazonaws.com/prod/{meal.lower}/getMenus"
   validate_res = requests.get(url=url)
   print(validate_res.json())
   data = validate_res.json()['data']['data']

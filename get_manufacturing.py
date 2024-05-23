@@ -9,12 +9,12 @@ collection_name_manufactured_prod = connect_mongo_manufactured_prod()
 
 def set_order_place(delivery_place):
     try:
-        if "front" in delivery_place.lower():
-            return "Front gate"
+        if "location" in delivery_place.lower():
+            return ['Your Own Location(Priority)', 'Your Own Location(Normal)']
         else:
-            return "Back gate"
+            return ['Back gate distribution center']
     except:
-        return "Front gate"
+        return ['Back gate distribution center']
 def set_order_time(time):
     try:
         if "11" in time.lower():
@@ -69,8 +69,9 @@ def get_optimal_manufactures(collection ,meal , delivery_place , limit,time):
     print(delivery_place)
     print(set_order_place(delivery_place))
     print(set_order_time(time))
+    delivery_place_ = set_order_place(delivery_place)
     cursor = collection.find({'meal': meal,"delivery_status": False,
-                              "delivery_place": set_order_place(delivery_place),
+                              "delivery_place":{"$in": delivery_place_} ,
                               "delivery_time": set_order_time(time),
                               'order_status': True
                               })
@@ -139,12 +140,12 @@ def manufacturing(collection_name_manufactured , collection_name_order , meal , 
             "delivery_status": True
         }})
         collection_name_manufactured.insert_one(doc)
-    bill_docs , manufacture_doc = get_bill_documents(docs)
+    bill_docs , manufacture_docs = get_bill_documents(docs)
     create_bill_pdf(bill_docs)
-    get_delivery_report(docs=manufacture_doc,
+    delivery_place_ = set_order_place(delivery_place)
+    get_delivery_report(docs=manufacture_docs,
                         balance=collection_name_order.count_documents({'meal': meal, "delivery_status": False,
-                                                                           "delivery_place": set_order_place(
-                                                                               delivery_place),
+                                                                           "delivery_place": {"$in": delivery_place_},
                                                                            "delivery_time": set_order_time(time),
                                                                            'order_status': True}),
                         collection_name=collection_name_order)

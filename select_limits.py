@@ -4,6 +4,7 @@ from bson import ObjectId
 
 from limit_prediction import input_data_limit , prediction
 from menu_availability import set_food_availability_one, get_today_menu
+from ml_report_generate import create_limit_pdf
 from service import connect_mongo_menu
 
 collection_name = connect_mongo_menu()
@@ -29,7 +30,7 @@ def select_best_limit(meal , food_type , pre_request , day , holiday , whether ,
     return prediction_
 
 def select_best_limits(meal , holiday , whether , temperature):
-    menu = get_today_menu()
+    menu = get_today_menu(meal=meal)
     report = collection_name.find_one({'_id': ObjectId('64e4d0030affa844f4771d9e')})
     reports = report['total_report']
     date = datetime.today().strftime('%Y-%m-%d')
@@ -53,7 +54,8 @@ def select_best_limits(meal , holiday , whether , temperature):
             'limit':round(abs(prediction_ - pre_request))+3,
             'pre_request':pre_request
         }
-    print(limits)
+    print('limits',limits)
+    create_limit_pdf(limits, meal)
     return limits
 
 body = {
@@ -63,6 +65,6 @@ body = {
     "meal":"Dinner"
 }
 
-select_best_limits(body['meal'] , body['holiday'] , body['whether'] , body['temperature'])
-
+# select_best_limits(body['meal'] , body['holiday'] , body['whether'] , body['temperature'])
+#
 
