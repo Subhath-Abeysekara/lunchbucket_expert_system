@@ -50,7 +50,10 @@ def get_bill_documents(docs):
     i = 1
     for doc in docs:
         bill_documents[str(i)] =  {'customer_code': doc['customer_code'],
-                                   'order_code': generate_code(str(doc['_id'])),'price': doc['price']}
+                                   'order_code': generate_code(str(doc['_id'])),'price': round(doc['price'] / 10) * 10}
+        for j in range(0 , doc['packet_amount'] - 1):
+            bill_documents[f"{str(i)}_{j+2}"] = {'customer_code': doc['customer_code'],
+                                      'order_code': generate_code(str(doc['_id'])), 'price': 0}
         doc['no'] = i
         documents.append(doc)
         i += 1
