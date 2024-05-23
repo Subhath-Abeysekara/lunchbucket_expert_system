@@ -1,4 +1,6 @@
-from getReport import get_orders, collection_name_order_prod, collection_name_order_dev, get_delivery_report
+from create_bill_pdf import create_bill_pdf
+from getReport import get_orders, collection_name_order_prod, collection_name_order_dev, get_delivery_report, \
+    generate_code
 from mongoConnection import connect_mongo_manufactured_dev, connect_mongo_manufactured_prod
 from collections import Counter
 
@@ -42,6 +44,17 @@ def set_order_time(time):
     except:
         return "11:00 AM"
 
+def get_bill_documents(docs):
+    bill_documents = {}
+    documents = []
+    i = 1
+    for doc in docs:
+        bill_documents[str(i)] =  {'customer_code': doc['customer_code'],
+                                   'order_code': generate_code(str(doc['_id'])),'price': doc['price']}
+        doc['no'] = i
+        documents.append(doc)
+        i += 1
+    return bill_documents , documents
 def document(doc):
     doc['id'] = str(doc['_id'])
     del doc['_id']
@@ -126,7 +139,9 @@ def manufacturing(collection_name_manufactured , collection_name_order , meal , 
             "delivery_status": True
         }})
         collection_name_manufactured.insert_one(doc)
-    get_delivery_report(docs=docs,
+    bill_docs , manufacture_doc = get_bill_documents(docs)
+    create_bill_pdf(bill_docs)
+    get_delivery_report(docs=manufacture_doc,
                         balance=collection_name_order.count_documents({'meal': meal, "delivery_status": False,
                                                                            "delivery_place": set_order_place(
                                                                                delivery_place),

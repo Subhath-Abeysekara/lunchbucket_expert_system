@@ -56,4 +56,13 @@ def select_best_limits(meal , holiday , whether , temperature):
     print(limits)
     return limits
 
+body = {
+    "holiday" :"Yes",
+    "whether" :"Partly Cloudy",
+    "temperature" : 90,
+    "meal":"Dinner"
+}
+
+select_best_limits(body['meal'] , body['holiday'] , body['whether'] , body['temperature'])
+
 
