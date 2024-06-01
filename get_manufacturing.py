@@ -135,8 +135,9 @@ def manufacturing(collection_name_manufactured , collection_name_order , meal , 
                                     limit=limit, time=time)
     print(docs)
     docs = list(docs)
+    delivery_place_ = set_order_place(delivery_place)
     collection_name_manufactured.delete_many(
-        {'meal': meal, "delivery_place": set_order_place(delivery_place=delivery_place)})
+        {'meal': meal, "delivery_place": {"$in": delivery_place_}})
     for doc in docs:
         print(doc)
         collection_name_order.update_one({'_id': doc['_id']}, {'$set': {
@@ -145,7 +146,6 @@ def manufacturing(collection_name_manufactured , collection_name_order , meal , 
         collection_name_manufactured.insert_one(doc)
     bill_docs , manufacture_docs = get_bill_documents(docs)
     create_bill_pdf(bill_docs)
-    delivery_place_ = set_order_place(delivery_place)
     get_delivery_report(docs=manufacture_docs,
                         balance=collection_name_order.count_documents({'meal': meal, "delivery_status": False,
                                                                            "delivery_place": {"$in": delivery_place_},
