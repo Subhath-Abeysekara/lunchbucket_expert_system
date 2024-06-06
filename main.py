@@ -120,7 +120,7 @@ def suitability_for_three_dinner_prod(id1, id2, id3):
 def get_report_dev(meal):
     try:
         print(meal)
-        return getReport.get_report_dev(meal=meal)
+        return getReport.get_report_dev(meal=meal.lower())
     except:
         return {
             "state": False,
@@ -131,7 +131,7 @@ def get_report_dev(meal):
 @cross_origin()
 def get_report_prod(meal):
     try:
-        return getReport.get_report_prod(meal=meal)
+        return getReport.get_report_prod(meal=meal.lower())
     except:
         return {
             "state": False,

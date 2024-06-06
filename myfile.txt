@@ -1,1 +1,13 @@
-BALANCE ORDERS FOR THIS TIME :0
+6:
+white rice:
+Dhal Curry Kirata:
+Sausage Mixed Vege Salad:
+Vegetable Egg Omlet:
+gravy:No Gravy
+price:275
+packet_amount:1
+customer_code:2222
+order_code:17837
+delivery_time:12:30 PM
+threat:False
+printed:False

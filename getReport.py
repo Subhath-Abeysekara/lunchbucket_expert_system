@@ -36,8 +36,12 @@ def get_report(collection_name, id, meal):
 
 
 def get_orders(collection_name, meal):
+    if 'lun' in meal:
+        meal = "Lunch"
+    else:
+        meal = "Dinner"
     docs = collection_name.find({'meal': meal, 'order_status': True})
-    return docs
+    return list(docs)
 
 
 def create_report(collection_name, docs, pdf, update_state, balance):
@@ -49,10 +53,15 @@ def create_report(collection_name, docs, pdf, update_state, balance):
     i = 0
     for doc in docs:
         i += 1
-        report_new = {
-            doc['no']: ''
-        }
-        print(doc)
+        try:
+            report_new = {
+                doc['no']: ''
+            }
+        except:
+            report_new = {
+                str(i): ''
+            }
+        print("doc",doc)
         try:
             gravy = doc['gravy']
         except:
