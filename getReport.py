@@ -81,6 +81,10 @@ def create_report(collection_name, docs, pdf, update_state, balance):
             report_new['delivery_time'] = doc['delivery_time']
             report_new['threat'] = doc['threat']
             report_new['printed'] = doc['printed']
+            try:
+                report_new['contact'] = doc['contact']
+            except:
+                print("contact error")
         except:
             print("error")
         if doc['printed']:
