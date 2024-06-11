@@ -51,6 +51,11 @@ def create_report(collection_name, docs, pdf, update_state, balance):
     }
     pdf = generate_pdf(report_orders, pdf, "")
     i = 0
+    gravy_counts = {
+        "Milk Gravy":0,
+        "Chicken Gravy":0,
+        "No Gravy":0
+    }
     for doc in docs:
         i += 1
         try:
@@ -64,8 +69,10 @@ def create_report(collection_name, docs, pdf, update_state, balance):
         print("doc",doc)
         try:
             gravy = doc['gravy']
+            gravy_counts[gravy]+=1
         except:
             gravy = 'Milk Gravy'
+            gravy_counts[gravy] += 1
         try:
             if doc['order_type'] == "special":
                 report_new[doc['type']] = ''
@@ -102,6 +109,16 @@ def create_report(collection_name, docs, pdf, update_state, balance):
         report_orders = {
             'BALANCE ORDERS FOR THIS TIME ': str(balance)
         }
+        for gravy_item in gravy_counts:
+            report_orders[gravy_item] = gravy_counts[gravy_item]
+        pdf.add_page()
+        pdf = generate_pdf(report_orders, pdf, "")
+    else:
+        report_orders = {
+            'GRAVY AMOUNTS ': ""
+        }
+        for gravy_item in gravy_counts:
+            report_orders[gravy_item] = gravy_counts[gravy_item]
         pdf.add_page()
         pdf = generate_pdf(report_orders, pdf, "")
     print_pdf(pdf)
@@ -163,3 +180,5 @@ def get_report_prod(meal):
 def get_delivery_report(docs, balance, collection_name):
     pdf = init_pdf()
     return create_report(collection_name, docs, pdf, False, balance)
+
+# get_report_prod(meal = "lunch")
