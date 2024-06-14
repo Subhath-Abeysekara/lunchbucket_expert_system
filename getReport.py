@@ -69,10 +69,10 @@ def create_report(collection_name, docs, pdf, update_state, balance):
         print("doc",doc)
         try:
             gravy = doc['gravy']
-            gravy_counts[gravy]+=1
+            gravy_counts[gravy]+=doc['packet_amount']
         except:
             gravy = 'Milk Gravy'
-            gravy_counts[gravy] += 1
+            gravy_counts[gravy] += doc['packet_amount']
         try:
             if doc['order_type'] == "special":
                 report_new[doc['type']] = ''

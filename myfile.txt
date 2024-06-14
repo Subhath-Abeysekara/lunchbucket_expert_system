@@ -1,4 +1,4 @@
 GRAVY AMOUNTS :
-Milk Gravy:1
-Chicken Gravy:1
+Milk Gravy:5
+Chicken Gravy:2
 No Gravy:0
