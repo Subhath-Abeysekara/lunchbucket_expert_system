@@ -154,6 +154,27 @@ def manufacturing(collection_name_manufactured , collection_name_order , meal , 
                         collection_name=collection_name_order)
     print(len(docs))
     return documents(docs)
+
+def manufacturing_production(collection_name_manufactured , collection_name_order):
+    customer_id = "668303baec54591976b2f385"
+    docs = collection_name_order.find({'customer_id': customer_id , "delivery_status": False})
+    print(docs)
+    docs = list(docs)
+    collection_name_manufactured.delete_many(
+        {'customer_id': customer_id})
+    for doc in docs:
+        print(doc)
+        collection_name_order.update_one({'_id': doc['_id']}, {'$set': {
+            "delivery_status": True
+        }})
+        collection_name_manufactured.insert_one(doc)
+    bill_docs , manufacture_docs = get_bill_documents(docs)
+    create_bill_pdf(bill_docs)
+    get_delivery_report(docs=manufacture_docs,
+                        balance=collection_name_order.count_documents({'customer_id': customer_id}),
+                        collection_name=collection_name_order)
+    print(len(docs))
+    return documents(docs)
 def get_manufacturing_dev(meal , delivery_place , limit,time):
     return manufacturing(collection_name_manufactured_dev , collection_name_order_dev ,
                          meal , delivery_place , limit,time)
@@ -162,5 +183,10 @@ def get_manufacturing_prod(meal , delivery_place , limit,time):
     return manufacturing(collection_name_manufactured_prod , collection_name_order_prod,
                          meal , delivery_place , limit,time)
 
+def get_manufacturing_production_prod():
+    return manufacturing_production(collection_name_manufactured_prod , collection_name_order_prod)
+
 # print(get_optimal_manufactures(collection_name_order_dev,"Lunch","front",2,"11:30 AM"))
 # get_manufacturing_dev("Lunch" , "Back gate" , 20,"13")
+
+# get_manufacturing_production_prod()

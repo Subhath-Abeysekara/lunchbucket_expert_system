@@ -230,6 +230,11 @@ def get_manufacture_prod(meal,place,limit,time):
     print(meal)
     return get_manufacturing.get_manufacturing_prod(meal=meal, delivery_place=place, limit=int(limit), time=time)
 
+@app.route("/prod/manufactur_production")
+@cross_origin()
+def get_manufacture_prod_production():
+    return get_manufacturing.get_manufacturing_production_prod()
+
 
 if __name__ == '__main__':
     app.debug = True
