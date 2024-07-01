@@ -11,6 +11,8 @@ def set_order_place(delivery_place):
     try:
         if "location" in delivery_place.lower():
             return ['Your Own Location(Priority)', 'Your Own Location(Normal)']
+        elif "production" in delivery_place.lower():
+            return ['Production House Pickup Point']
         else:
             return ['Back gate distribution center']
     except:
@@ -41,6 +43,8 @@ def set_order_time(time):
             return "4:30 PM"
         elif "5" in time.lower():
             return "5:30 PM"
+        elif "pr" in time.lower():
+            return "Takes around 10-15 minutes"
     except:
         return "11:00 AM"
 
