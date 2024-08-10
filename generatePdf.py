@@ -6,7 +6,7 @@ def init_pdf():
     pdf.add_page()
     return pdf
 
-def generate_pdf(document , pdf,state):
+def generate_pdf(document , pdf,state , large_state = False):
     pdf.set_font("Arial", size=15)
     if state == "orders":
         pdf.set_text_color(0, 255, 0)
@@ -14,6 +14,16 @@ def generate_pdf(document , pdf,state):
         pdf.set_text_color(255, 0, 0)
     elif state == "printed":
         pdf.set_text_color(139, 69, 19)
+        if large_state:
+            pdf.set_text_color(92,64,51)
+    elif state == 'priority':
+        pdf.set_text_color(0,255,0)
+        if large_state:
+            pdf.set_text_color(0,100,0)
+    elif state == 'normal':
+        pdf.set_text_color(0, 0, 230)
+        if large_state:
+            pdf.set_text_color(0,0,100)
     else:
         pdf.set_text_color(0, 0, 0)
     with open("myfile.txt", 'w') as f:

@@ -1,4 +1,4 @@
-BALANCE ORDERS FOR THIS TIME :1
-Milk Gravy:0
+GRAVY AMOUNTS :
+Milk Gravy:1
 Chicken Gravy:0
 No Gravy:0

@@ -36,12 +36,14 @@ def get_report(collection_name, id, meal):
 
 
 def get_orders(collection_name, meal):
-    if 'lun' in meal:
+    if 'lun' in meal.lower():
         meal = "Lunch"
     else:
         meal = "Dinner"
     docs = collection_name.find({'meal': meal, 'order_status': True})
-    return list(docs)
+    docs = list(docs)
+    print(docs)
+    return docs
 
 
 def create_report(collection_name, docs, pdf, update_state, balance):
@@ -73,6 +75,8 @@ def create_report(collection_name, docs, pdf, update_state, balance):
         except:
             gravy = 'Milk Gravy'
             gravy_counts[gravy] += doc['packet_amount']
+        location = 'back gate'
+        large = False
         try:
             if doc['order_type'] == "special":
                 report_new[doc['type']] = ''
@@ -80,6 +84,11 @@ def create_report(collection_name, docs, pdf, update_state, balance):
             else:
                 for item in doc['items']:
                     report_new[item] = ''
+                    try:
+                        if 'rice(large)' in item.lower():
+                            large = True
+                    except:
+                        print("")
             report_new['gravy'] = gravy
             report_new['price'] = doc['price']
             report_new['packet_amount'] = doc['packet_amount']
@@ -92,6 +101,14 @@ def create_report(collection_name, docs, pdf, update_state, balance):
                 report_new['contact'] = doc['contact']
             except:
                 print("contact error")
+            try:
+                if doc['location'] and doc['priority']:
+                    location = 'priority'
+                elif doc['location']:
+                    location = 'normal'
+                report_new['location'] =  location
+            except:
+                print("location error")
         except:
             print("error")
         if doc['printed']:
@@ -103,7 +120,9 @@ def create_report(collection_name, docs, pdf, update_state, balance):
             if update_state:
                 print("update")
                 collection_name.update_one({'_id': doc['_id']}, {'$set': {"printed": True}})
-        pdf = generate_pdf(report_new, pdf, "threat" if doc['threat'] else state)
+        if doc['location']:
+            state = location
+        pdf = generate_pdf(report_new, pdf, "threat" if doc['threat'] else state , large_state=large)
     print("he")
     if not update_state:
         report_orders = {
@@ -181,4 +200,4 @@ def get_delivery_report(docs, balance, collection_name):
     pdf = init_pdf()
     return create_report(collection_name, docs, pdf, False, balance)
 
-# get_report_prod(meal = "lunch")
+# get_report_prod(meal = "Lunch")
