@@ -17,7 +17,7 @@ def generate_pdf(document , pdf,state , large_state = False):
         if large_state:
             pdf.set_text_color(92,64,51)
     elif state == 'priority':
-        pdf.set_text_color(0,255,0)
+        pdf.set_text_color(0,180,0)
         if large_state:
             pdf.set_text_color(0,100,0)
     elif state == 'normal':

@@ -200,4 +200,4 @@ def get_delivery_report(docs, balance, collection_name):
     pdf = init_pdf()
     return create_report(collection_name, docs, pdf, False, balance)
 
-# get_report_prod(meal = "Lunch")
+# get_report_prod(meal = "Dinner")
