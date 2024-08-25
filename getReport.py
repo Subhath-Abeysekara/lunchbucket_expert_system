@@ -151,8 +151,8 @@ def create_table(document, collection_name, report_id, meal):
     key_list = list(all_keys)
     print(key_list)
     if meal.lower() == 'lunch':
-        data = [['Item', "11:00", "12:30", "1:00", "1:30", "2:00"]]
-        time_keys = ["11:00", "12:30", "1:00", "1:30", "2:00"]
+        data = [['Item', "11:30", "12:30", "1:00", "1:30", "2:00"]]
+        time_keys = ["11:30", "12:30", "1:00", "1:30", "2:00"]
     else:
         data = [['Item', "7:30", "8:30", "9:00", "9:30"]]
         time_keys = ["7:30", "8:30", "9:00", "9:30"]

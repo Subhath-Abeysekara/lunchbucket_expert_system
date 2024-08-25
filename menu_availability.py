@@ -7,17 +7,11 @@ collection_name = connect_mongo_menu()
 
 
 def get_today_menu(meal):
-  url = f"https://r36pslzyv8.execute-api.ap-south-1.amazonaws.com/prod/{meal.lower}/getMenus"
+  url = f"https://r36pslzyv8.execute-api.ap-south-1.amazonaws.com/prod/{meal.lower()}/getMenus"
   validate_res = requests.get(url=url)
   print(validate_res.json())
   data = validate_res.json()['data']['data']
-  menu = {}
-  for key in data:
-    print(data[key])
-    for food in data[key]:
-      menu[food['type']] = 0
-  print(menu)
-  return menu
+  return data
 
 
 def matching_rate(meal, reports):
