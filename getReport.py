@@ -151,14 +151,14 @@ def create_table(document, collection_name, report_id, meal):
     key_list = list(all_keys)
     print(key_list)
     if meal.lower() == 'lunch':
-        data = [['Item', "11:30", "12:30", "1:00", "1:30", "2:00"]]
-        time_keys = ["11:30", "12:30", "1:00", "1:30", "2:00"]
+        data = [['Item', "11:30","12:00", "12:30", "1:00", "1:30", "2:00"]]
+        time_keys = ["11:30","12:00", "12:30", "1:00", "1:30", "2:00"]
     elif meal.lower() == 'breakfast':
         data = [['Item', "7:30", "8:00", "8:30", "9:00", "9:30"]]
         time_keys = ["7:30", "8:00", "8:30", "9:00", "9:30"]
     else:
-        data = [['Item', "7:30", "8:30", "9:00", "9:30"]]
-        time_keys = ["7:30", "8:30", "9:00", "9:30"]
+        data = [['Item', "7:30","8:00", "8:30", "9:00", "9:30"]]
+        time_keys = ["7:30","8:00", "8:30", "9:00", "9:30"]
     for key in key_list:
         document_ = document[key]
         data_ = [key]
@@ -202,4 +202,4 @@ def get_delivery_report(docs, balance, collection_name):
     pdf = init_pdf()
     return create_report(collection_name, docs, pdf, False, balance)
 
-# get_report_prod(meal = "Breakfast")
+# get_report_prod(meal = "Dinner")

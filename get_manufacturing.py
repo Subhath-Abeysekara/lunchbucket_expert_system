@@ -17,7 +17,7 @@ def set_order_place(delivery_place):
             return ['Back gate distribution center']
     except:
         return ['Back gate distribution center']
-def set_order_time(time , meal = 'lunch'):
+def set_order_time(time , meal = 'lunch' , location = "location"):
     try:
         if meal == 'breakfast':
             if "7" in time.lower():
@@ -32,6 +32,8 @@ def set_order_time(time , meal = 'lunch'):
                 return "9:00 AM"
         if "11" in time.lower():
             return "11:30 AM"
+        elif "12" in time.lower() and "back" in location.lower():
+            return "12:00 PM"
         elif "12" in time.lower():
             return "12:30 PM"
         elif "2" in time.lower():
@@ -42,6 +44,8 @@ def set_order_time(time , meal = 'lunch'):
             return "1:00 PM"
         elif "7" in time.lower():
             return "7:30 PM"
+        elif "8" in time.lower() and "back" in location.lower():
+            return "8:00 PM"
         elif "8" in time.lower():
             return "8:30 PM"
         elif "9" in time.lower() and "3" in time.lower():
@@ -90,7 +94,7 @@ def get_optimal_manufactures(collection ,meal , delivery_place , limit,time):
     delivery_place_ = set_order_place(delivery_place)
     cursor = collection.find({'meal': meal,"delivery_status": False,
                               "delivery_place":{"$in": delivery_place_} ,
-                              "delivery_time": set_order_time(time , meal=meal.lower()),
+                              "delivery_time": set_order_time(time , meal=meal.lower() , location=delivery_place.lower()),
                               'order_status': True
                               })
     cursor = list(cursor)
@@ -203,6 +207,6 @@ def get_manufacturing_production_prod():
 
 # print(get_optimal_manufactures(collection_name_order_dev,"Lunch","front",2,"11:30 AM"))
 # get_manufacturing_dev("Lunch" , "Back gate" , 20,"13")
-# get_manufacturing_prod('Breakfast' , "location" , 20,"7")
+# get_manufacturing_prod('Dinner' , "back gate" , 20,"8")
 
 # get_manufacturing_production_prod()
